@@ -65,24 +65,36 @@ export default {
 		doRememberMe() {},
 		login() {
 			if (this.$refs.form.validate()) {
-				const params = new URLSearchParams();
-				params.append("email", this.email);
-				params.append("password", this.password);
-				axios
-					.post("/api/login", params, { headers: { "Content-Type": "application/x-www-form-urlencoded" } })
+				this.$store
+					.dispatch("login", {
+						email: this.email,
+						password: this.password
+					})
 					.then(response => {
-						let principal = response.data;
-						if (principal && principal.token) {
-							this.$store.commit("login", principal);
-						}
+						console.log("login response: ", response);
 						this.$router.push({
 							path: "hello"
 						});
 					})
 					.catch(error => {
-						this.error.show = true;
-						this.error.content = error.response.data.errorList[0];
+						console.log("error: ", error);
 					});
+
+				// axios
+				// 	.post("/api/login", params, { headers: { "Content-Type": "application/x-www-form-urlencoded" } })
+				// 	.then(response => {
+				// 		let principal = response.data;
+				// 		if (principal && principal.token) {
+				// 			this.$store.commit("login", principal);
+				// 		}
+				// 		this.$router.push({
+				// 			path: "hello"
+				// 		});
+				// 	})
+				// 	.catch(error => {
+				// 		this.error.show = true;
+				// 		this.error.content = error.response.data.errorList[0];
+				// 	});
 			}
 		}
 	}
