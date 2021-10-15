@@ -79,22 +79,6 @@ export default {
 					.catch(error => {
 						console.log("error: ", error);
 					});
-
-				// axios
-				// 	.post("/api/login", params, { headers: { "Content-Type": "application/x-www-form-urlencoded" } })
-				// 	.then(response => {
-				// 		let principal = response.data;
-				// 		if (principal && principal.token) {
-				// 			this.$store.commit("login", principal);
-				// 		}
-				// 		this.$router.push({
-				// 			path: "hello"
-				// 		});
-				// 	})
-				// 	.catch(error => {
-				// 		this.error.show = true;
-				// 		this.error.content = error.response.data.errorList[0];
-				// 	});
 			}
 		}
 	}
