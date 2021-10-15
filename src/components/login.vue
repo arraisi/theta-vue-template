@@ -48,38 +48,42 @@
 </template>
 
 <script>
+/* eslint-disable no-console */
+import axios from "axios";
+
 export default {
 	data: function () {
 		return {
 			email: "",
 			password: "",
 			rememberMe: false,
-			passwordType: true
+			passwordType: true,
+			error: { show: false, content: "" }
 		};
 	},
 	methods: {
 		doRememberMe() {},
 		login() {
-			// if (this.$refs.form.validate()) {
-			// axios
-			// 	.post("/api/login", {
-			// 		email: this.email,
-			// 		password: this.password,
-			// 		rememberMe: this.rememberMe
-			// 	})
-			// 	.then(response => {
-			// 		let principal = response.data;
-			// 		if (principal && principal.token) {
-			// 			this.$store.commit("login", principal);
-			// 		}
-			this.$router.push({
-				path: "hello"
-			});
-			// 	})
-			// 	.catch(error => {
-			// 		console.log(error);
-			// 	});
-			// }
+			if (this.$refs.form.validate()) {
+				const params = new URLSearchParams();
+				params.append("email", this.email);
+				params.append("password", this.password);
+				axios
+					.post("/api/login", params, { headers: { "Content-Type": "application/x-www-form-urlencoded" } })
+					.then(response => {
+						let principal = response.data;
+						if (principal && principal.token) {
+							this.$store.commit("login", principal);
+						}
+						this.$router.push({
+							path: "hello"
+						});
+					})
+					.catch(error => {
+						this.error.show = true;
+						this.error.content = error.response.data.errorList[0];
+					});
+			}
 		}
 	}
 };
