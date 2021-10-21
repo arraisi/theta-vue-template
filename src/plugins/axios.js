@@ -11,34 +11,53 @@ axios.defaults.baseURL = "";
 // axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Origin, Accept, Content-Type, Authorization, Access-Control-Allow-Origin'
 
 if (window.location.origin.includes("localhost")) {
-	axios.defaults.withCredentials = true;
-	axios.defaults.baseURL = "http://localhost:8080/theta";
+  axios.defaults.withCredentials = true;
+  axios.defaults.baseURL = "http://localhost:8081/theta";
 }
 
 axios.interceptors.request.use(
-  function(config) {
-    // Do something before request is sent
-    return config;
+  request => {
+    // this.load();
+    return request;
   },
-  function(error) {
-    // Do something with request error
+  error => {
+    // this.unload();
+    let notification = { title: "Unknown error", content: "" };
+    if (error.response) {
+      if (error.response.status === 400) {
+        notification.title = "Bad request";
+      } else if (error.response.status === 500) {
+        notification.title = "Server error";
+      } else if (error.response.status === 401) {
+        notification.title = "Unauthorized";
+      } else if (error.response.status === 403) {
+        console.log("forbidden");
+        notification.title = "Forbidden";
+      } else if (error.response.status === 404) {
+        notification.title = "Not found";
+      } else {
+        notification.title = "Notification (" + error.response.status + ")";
+      }
+      notification.content = error.response.data;
+    }
+    this.$store.commit("showNotification", notification);
     return Promise.reject(error);
   }
 );
 
 // Add a response interceptor
 axios.interceptors.response.use(
-  function(response) {
+  function (response) {
     // Do something with response data
     return response;
   },
-  function(error) {
+  function (error) {
     // Do something with response error
     return Promise.reject(error);
   }
 );
 
-Plugin.install = function(Vue, options) {
+Plugin.install = function (Vue, options) {
   Vue.axios = axios;
   window.axios = axios;
   Object.defineProperties(Vue.prototype, {

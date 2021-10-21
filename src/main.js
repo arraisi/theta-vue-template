@@ -2,16 +2,16 @@ import Vue from 'vue'
 import './plugins/axios'
 import App from './App.vue'
 import vuetify from './plugins/vuetify'
-import router from './router'
-import store from './store'
+import router from './router/router'
+import store from './store/store'
 
 Vue.config.productionTip = false
 
 new Vue({
-  vuetify,
-  router,
-  store,
-  render: h => h(App),
+	vuetify,
+	router,
+	store,
+	render: h => h(App),
 	data() {
 		return {
 			loader: { count: 0, stroke: 7, diameter: 50, value: false }
@@ -50,7 +50,7 @@ new Vue({
 			}
 			return text;
 		},
-    capitalizeFirst(text) {
+		capitalizeFirst(text) {
 			return text && text[0].toUpperCase() + text.slice(1);
 		},
 		copyWith(newValue, source) {
@@ -64,11 +64,11 @@ new Vue({
 				return false;
 			}
 			// no children and object is numeric/boolean
-			if (typeof(object) === 'number' || typeof(object) === 'boolean') {
+			if (typeof (object) === 'number' || typeof (object) === 'boolean') {
 				return false;
 			}
 			// blank object: [], {}, "", null, undefined
 			return true;
 		}
-  }
+	}
 }).$mount('#app')

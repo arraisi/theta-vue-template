@@ -71,7 +71,6 @@ export default {
 						password: this.password
 					})
 					.then(response => {
-						console.log("login response: ", response);
 						this.$router.push({
 							path: "hello"
 						});

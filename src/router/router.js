@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HelloWorld from '../components/HelloWorld.vue'
+import DataTables from '../components/DataTables.vue'
 import navigation from '../components/navigation.vue'
 import login from '../components/login.vue'
 import menu from '../components/menu.vue'
@@ -25,6 +26,11 @@ const routes = [
       {
         path: '/hello',
         component: HelloWorld,
+        props: true
+      },
+      {
+        path: '/datatables',
+        component: DataTables,
         props: true
       }
     ]
