@@ -64,7 +64,7 @@ export default {
 			axios.get("/api/person/datatables?itemsPerPage=" + itemsPerPage + "&page=" + pageNumber + "&sortBy=" + sortBy + "&sortDesc=" + sortDesc).then(response => {
 				//Then injecting the result to datatable parameters.
 				this.loading = false;
-				this.data = response.data.list;
+				this.data = response.data.data;
 				this.serverItemsLength = response.data.size;
 			});
 		}

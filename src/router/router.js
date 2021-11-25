@@ -10,11 +10,14 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '/',
+    redirect: '/login'
+  },
+  {
     path: "",
     component: navigation,
     props: true,
     children: [
-      // { path: "/", component: automatic, props: true },
       { path: "/login", component: login, props: true },
     ]
   },
